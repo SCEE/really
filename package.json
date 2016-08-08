@@ -1,0 +1,23 @@
+{
+  "name": "really",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "version": "1.0.0",
+  "description": "Sprint view for Rally.",
+  "main": "index.js",
+  "directories": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jadaradix/really"
+  },
+  "author": "James Garner <james_garner@scee.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jadaradix/really/issues"
+  },
+  "homepage": "https://github.com/jadaradix/really",
+  "dependencies": {
+    "restify": "^4.1.1"
+  }
+}

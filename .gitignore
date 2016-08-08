@@ -1,0 +1,5 @@
+node_modules
+forever-logs
+.DS_Store
+Thumbs.db
+npm-debug.log*
