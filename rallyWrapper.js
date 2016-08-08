@@ -18,34 +18,55 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
     }
   });
 
-  const getIterations = function getIterations (callback) {
+  const getIdFromRef = function getIdFromRef (ref) {
+    return ref.split("/").pop();
+  };
+
+  const getIterations = function getIterations (projectId, callback) {
+    const fields = ['FormattedID', 'Name'];
     rallyInstance.query({
-        type: 'iteration', //the type to query
-        // start: 1, //the 1-based start index, defaults to 1
-        // pageSize: 2, //the page size (1-200, defaults to 200)
-        // limit: 10, //the maximum number of results to return- enables auto paging
-        // order: 'Rank', //how to sort the results
-        // query: rallyQueryUtils.where('DirectChildrenCount', '>', 0), //optional filter
-        fetch: ['FormattedID', 'Name', 'ScheduleState', 'Children'], //the fields to retrieve
-        scope: {
-            project: '/project/19220804858', //specify to query a specific project
-            up: false, //true to include parent project results, false otherwise
-            down: false //true to include child project results, false otherwise
-        },
-        requestOptions: {} //optional additional options to pass through to request
+      type: 'iteration',
+      fetch: fields,
+      scope: {
+        project: `/project/${projectId}`,
+        up: false,
+        down: false
+      },
+      requestOptions: {}
     }, function(error, result) {
         if (error) return callback(error);
+        result.Results.map((result) => {
+          result.IterationId = getIdFromRef(result._ref);
+          return result;
+        });
         return callback(false, result.Results);
     });
   };
 
-  const getTickets = function getTickets (iteration, callback) {
-    return callback(false, []);
+  const getIterationTickets = function getIterationTickets (projectId, iterationId, callback) {
+    const fields = ['FormattedID', 'Name', 'ScheduleState', 'PlanEstimate', 'Children'];
+    rallyInstance.query({
+      type: 'hierarchicalrequirement',
+      order: 'DragAndDropRank',
+      query: rallyQueryUtils.where('Iteration.ObjectID', '=', iterationId),
+      fetch: fields,
+      scope: {
+        project: `/project/${projectId}`,
+        up: false,
+        down: false
+      }
+    },
+    function (error, result) {
+      if (error) {
+        return callback(error);
+      }
+      return callback(false, result);
+    });
   };
 
   return {
     getIterations,
-    getTickets
+    getIterationTickets
   };
 
 };
