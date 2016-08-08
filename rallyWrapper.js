@@ -6,8 +6,6 @@ const rallyQueryUtils = rally.util.query;
 const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
 
   const rallyInstance = rally({
-    server: "https://rally1.rallydev.com",
-    apiKey: apiKey,
     apiVersion: apiVersion,
     requestOptions: {
       headers: {
@@ -43,7 +41,7 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
     });
   };
 
-  const getIterationTickets = function getIterationTickets (projectId, iterationId, callback) {
+  const getIterationStories = function getIterationStories (projectId, iterationId, callback) {
     const fields = ['FormattedID', 'Name', 'ScheduleState', 'PlanEstimate', 'Children'];
     rallyInstance.query({
       type: 'hierarchicalrequirement',
@@ -64,9 +62,31 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
     });
   };
 
+  const getIterationDefects = function getIterationDefects (projectId, iterationId, callback) {
+    const fields = ['FormattedID', 'Name', 'ScheduleState', 'PlanEstimate', 'Children'];
+    rallyInstance.query({
+      type: 'defect',
+      order: 'DragAndDropRank',
+      query: rallyQueryUtils.where('Iteration.ObjectID', '=', iterationId),
+      fetch: fields,
+      scope: {
+        project: `/project/${projectId}`,
+        up: false,
+        down: false
+      }
+    },
+    function (error, result) {
+      if (error) {
+        return callback(error);
+      }
+      return callback(false, result);
+    });
+  }
+
   return {
     getIterations,
-    getIterationTickets
+    getIterationStories,
+    getIterationDefects
   };
 
 };
