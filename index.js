@@ -6,7 +6,15 @@ const PORT = 8080;
 
 const restify = require("restify");
 const rallyWrapper = require("./rallyWrapper");
+
 const server = restify.createServer();
+server.use(
+  function crossOrigin(req,res,next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    return next();
+  }
+);
 
 const rallyWrapperInstance = new rallyWrapper(RALLY_API_KEY, RALLY_API_VERSION);
 
