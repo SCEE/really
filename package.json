@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/jadaradix/really",
   "dependencies": {
+    "babel-runtime": "^6.11.6",
+    "rally": "^2.0.0",
     "restify": "^4.1.1"
   }
 }
