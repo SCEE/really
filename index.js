@@ -1,6 +1,6 @@
 "use strict";
 
-const RALLY_API_KEY = "_oQZeiOy7RgeBpyL2qUVUdQ2aWnDldEcxvzoeOIKTLk";
+const RALLY_API_KEY = process.env.RALLY_API_KEY || "";
 const RALLY_API_VERSION = "v2.0";
 const PORT = 8080;
 
