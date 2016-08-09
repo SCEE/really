@@ -7,7 +7,7 @@ Sprint view for Rally.
 * Run `npm install` to download NodeJS dependencies for the backend
 * `cd frontend`
 * Run `npm install` to download NodeJS dependencies for the frontend
-* Run `grunt` to download client-side JavaScript libraries
+* Run `npm run build` to download client-side JavaScript libraries
 * `cd ..`
 * `export RALLY_API_KEY = "<generated_rally_api_key>"`
 * Start server with `npm start`
