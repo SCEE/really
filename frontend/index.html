@@ -6,9 +6,21 @@
   </head>
   <body ng-app="app">
     <div ng-controller="sprintController">
-      <ul>
-      <li ng-repeat="iteration in iterations">{{iteration.Name}}</li>
-      </ul>
+
+      <section ng-if="iterations.length > 0">
+        <h1>Iterations</h1>
+        <ul>
+          <li ng-repeat="iteration in iterations">{{iteration.Name}}</li>
+        </ul>
+      </section>
+
+      <section ng-if="currentIterationStories">
+        <h1>Current Iteration Stories</h1>
+        <ul>
+          <li ng-repeat="currentIterationStory in currentIterationStories">{{currentIterationStory.Name}} ({{currentIterationStory.ScheduleState}} / {{currentIterationStory.PlanEstimate}})</li>
+        </ul>
+      </section>
+
     </div>
   </body>
 </html>

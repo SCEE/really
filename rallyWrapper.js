@@ -58,7 +58,7 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
       if (error) {
         return callback(error);
       }
-      return callback(false, result);
+      return callback(false, result.Results);
     });
   };
 
@@ -79,7 +79,7 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
       if (error) {
         return callback(error);
       }
-      return callback(false, result);
+      return callback(false, result.Results);
     });
   }
 
