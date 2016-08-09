@@ -2,9 +2,12 @@
 
 const controller = function controller ($scope, backendService) {
 
+  const projectId = "19220804858";
+  const iterationId = "54597367827";
+
   $scope.iterations = [];
 
-  backendService.getIterations("19220804858", (err, iterations) => {
+  backendService.getIterations(projectId, (err, iterations) => {
     $scope.iterations = iterations;
   });
 

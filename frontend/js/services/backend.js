@@ -2,6 +2,8 @@
 
 const service = function service ($http) {
 
+  const url = "http://localhost:8080";
+
   const abstractedMethod = function abstractedMethod (url, method, data, callback) {
     let promise = null;
     if (method === "get") {
@@ -19,21 +21,21 @@ const service = function service ($http) {
         return callback(false, response.data);
       },
       function error (response) {
-        return callback("Generic error (error promise block)");
+        return callback(`Generic error (error promise block): ${response}`);
       }
     );
   };
 
   this.getIterations = function getIterations (projectId, callback) {
-    return abstractedMethod(`http://localhost:8080/project/${projectId}/iterations`, "get", {}, callback);
+    return abstractedMethod(`${url}/project/${projectId}/iterations`, "get", {}, callback);
   };
 
   this.getIterationStories = function getIterationStories (projectId, iterationId, callback) {
-    return callback(false, []);
+    return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/stories`, "get", {}, callback);
   };
 
   this.getIterationDefects = function getIterationDefects (projectId, iterationId, callback) {
-    return callback(false, []);
+    return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/defects`, "get", {}, callback);
   };
 
 };
