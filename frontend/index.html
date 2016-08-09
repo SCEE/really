@@ -9,16 +9,16 @@
 
       <section ng-if="iterations.length > 0">
         <h1>Iterations</h1>
-        <ul>
+        <ol>
           <li ng-repeat="iteration in iterations">{{iteration.Name}}</li>
-        </ul>
+        </ol>
       </section>
 
-      <section ng-if="currentIterationStories">
-        <h1>Current Iteration Stories</h1>
-        <ul>
-          <li ng-repeat="currentIterationStory in currentIterationStories">{{currentIterationStory.Name}} ({{currentIterationStory.ScheduleState}} / {{currentIterationStory.PlanEstimate}})</li>
-        </ul>
+      <section ng-if="currentIterationTickets">
+        <h1>Current Iteration Tickets</h1>
+        <ol>
+          <li ng-repeat="currentIterationTicket in currentIterationTickets">{{currentIterationTicket.Name}} ({{currentIterationTicket.ScheduleState}} / {{currentIterationTicket.PlanEstimate}})</li>
+        </ol>
       </section>
 
     </div>

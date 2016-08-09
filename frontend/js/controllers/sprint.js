@@ -6,15 +6,19 @@ const controller = function controller ($scope, backendService) {
   const iterationId = "54597367827";
 
   $scope.iterations = [];
-  $scope.currentIterationStories = null;
+  $scope.currentIterationTickets = [];
 
   backendService.getIterations(projectId, (err, iterations) => {
     $scope.iterations = iterations;
   });
 
   $scope.setCurrentIteration = function setCurrentIteration (iterationId) {
+    $scope.currentIterationTickets = [];
     backendService.getIterationStories(projectId, iterationId, (err, stories) => {
-      $scope.currentIterationStories = stories;
+      $scope.currentIterationTickets = $scope.currentIterationTickets.concat(stories);
+    });
+    backendService.getIterationDefects(projectId, iterationId, (err, defects) => {
+      $scope.currentIterationTickets = $scope.currentIterationTickets.concat(defects);
     });
   };
 
