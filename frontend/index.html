@@ -14,7 +14,7 @@
         </ol>
       </section>
 
-      <section ng-if="currentIterationTickets">
+      <section ng-if="currentIterationTickets.length > 0">
         <h1>Current Iteration Tickets</h1>
         <ol>
           <li ng-repeat="currentIterationTicket in currentIterationTickets">{{currentIterationTicket.Name}} ({{currentIterationTicket.ScheduleState}} / {{currentIterationTicket.PlanEstimate}})</li>
