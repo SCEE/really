@@ -1,5 +1,7 @@
 "use strict";
 
+const async = require("async");
+
 const service = function service ($http) {
 
   const url = window.location.protocol + "//" + window.location.hostname + ":8080";
@@ -30,13 +32,19 @@ const service = function service ($http) {
     return abstractedMethod(`${url}/project/${projectId}/iterations`, "get", {}, callback);
   };
 
-  this.getIterationStories = function getIterationStories (projectId, iterationId, callback) {
-    return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/stories`, "get", {}, callback);
+  this.getIterationTickets = function getIterationTickets (projectId, iterationId, callback) {
+    async.parallel([
+      (parallelCallback) => {
+        return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/stories`, "get", {}, parallelCallback);
+      },
+      (parallelCallback) => {
+        return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/defects`, "get", {}, parallelCallback);
+      }
+    ], function (err, stuff) {
+      return callback(err, [].concat.apply([], stuff));
+    });
   };
 
-  this.getIterationDefects = function getIterationDefects (projectId, iterationId, callback) {
-    return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/defects`, "get", {}, callback);
-  };
 };
 
 module.exports = service;

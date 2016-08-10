@@ -3,6 +3,23 @@
   <head>
     <meta charset="utf-8">
     <script src="js/index-browserified.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body, body > div, iframe {
+        height: 100%;
+      }
+      iframe {
+        width: 100%;
+        border: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
   </head>
   <body ng-app="app">
     <div ng-controller="sprintController">
@@ -10,16 +27,11 @@
       <section ng-if="iterations.length > 0">
         <h1>Iterations</h1>
         <ol>
-          <li ng-repeat="iteration in iterations">{{iteration.Name}}</li>
+          <li ng-repeat="iteration in iterations">{{iteration.Name}} ({{iteration.IterationId}})</li>
         </ol>
       </section>
 
-      <section ng-if="currentIterationTickets.length > 0">
-        <h1>Current Iteration Tickets</h1>
-        <ol>
-          <li ng-repeat="currentIterationTicket in currentIterationTickets">{{currentIterationTicket.Name}} ({{currentIterationTicket.ScheduleState}} / {{currentIterationTicket.PlanEstimate}})</li>
-        </ol>
-      </section>
+      <iframe ng-if="currentYouTubeUrl" ng-src="{{currentYouTubeUrl}}"></iframe>
 
     </div>
   </body>
