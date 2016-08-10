@@ -10,5 +10,7 @@ Sprint view for Rally.
 * Run `npm run build` to download client-side JavaScript libraries
 * `cd ..`
 * `export RALLY_API_KEY = "<generated_rally_api_key>"`
-* Start server with `npm start`
-* Verify all is well by opening `frontend/index.html` in the browser
+* Start backend server with `npm start`
+* `cd frontend`
+* Start frontend server with `npm start`
+* Verify all is well by opening `http://<host>:8081` in the browser
