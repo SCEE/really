@@ -4,6 +4,7 @@ const controller = function controller ($scope, backendService) {
 
   const projectId = "19220804858";
   const iterationId = "54597367827";
+  const updateInterval = 1000 * 10; // 10 seconds
 
   $scope.iterations = [];
   $scope.currentIterationTickets = [];
@@ -12,7 +13,8 @@ const controller = function controller ($scope, backendService) {
     $scope.iterations = iterations;
   });
 
-  $scope.setCurrentIteration = function setCurrentIteration (iterationId) {
+  const updateIteration = function updateIteration () {
+    console.log("Updating iteration...");
     $scope.currentIterationTickets = [];
     backendService.getIterationStories(projectId, iterationId, (err, stories) => {
       if (err) return;
@@ -24,7 +26,8 @@ const controller = function controller ($scope, backendService) {
     });
   };
 
-  $scope.setCurrentIteration(iterationId);
+  updateIteration();
+  setInterval(updateIteration, updateInterval);
 
 };
 

@@ -27,7 +27,6 @@ const service = function service ($http) {
   };
 
   this.getIterations = function getIterations (projectId, callback) {
-    console.log(JSON.stringify(window.location));
     return abstractedMethod(`${url}/project/${projectId}/iterations`, "get", {}, callback);
   };
 
