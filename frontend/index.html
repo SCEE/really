@@ -24,12 +24,13 @@
   <body ng-app="app">
     <div ng-controller="sprintController">
 
-      <section ng-if="iterations.length > 0">
-        <h1>Iterations</h1>
-        <ol>
-          <li ng-repeat="iteration in iterations">{{iteration.Name}} ({{iteration.IterationId}})</li>
-        </ol>
-      </section>
+      <h1>Iterations</h1>
+      <select ng-options="iteration.Name for iteration in iterations" ng-model="currentIteration" ng-change="manuallyUpdateIteration()"></select>
+
+      <h1>Tickets</h1>
+      <ol>
+        <li ng-repeat="ticket in currentIterationTickets">{{ticket.Name}} ({{ticket.PlanEstimate || "No Estimate"}} - {{ticket.ScheduleState}})</li>
+      </ol>
 
       <iframe ng-if="currentYouTubeUrl" ng-src="{{currentYouTubeUrl}}"></iframe>
 
