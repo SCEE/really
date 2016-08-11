@@ -5,7 +5,6 @@ const ueber = require("ueber");
 const controller = function controller ($scope, $sce, backendService) {
 
   const projectId = "19220804858";
-  const iterationId = "54597492467";
   const updateInterval = 1000 * 5;
   const youTubePlayLength = 1000 * 120;
   const scheduleStateWeCareAbout = "Accepted";
@@ -37,18 +36,18 @@ const controller = function controller ($scope, $sce, backendService) {
 
   $scope.iterations = [];
   $scope.currentIteration = null;
-
   $scope.currentIterationTickets = [];
   $scope.currentYouTubeUrl = null;
 
-  backendService.getIterations(projectId, (err, iterations) => {
-    $scope.iterations = iterations;
-    $scope.currentIteration = iterations[iterations.length - 1];
-  });
+  $scope.manuallyUpdateIteration = function manuallyUpdateIteration () {
+    hasUpdatedIterationYet = false;
+    $scope.updateIteration();
+  };
 
-  const updateIteration = function updateIteration () {
-    console.log("Updating iteration...");
-    backendService.getIterationTickets(projectId, iterationId, (err, tickets) => {
+  $scope.updateIteration = function updateIteration () {
+
+    console.log("Updating iteration %s (%s)...", $scope.currentIteration.Name, $scope.currentIteration.IterationId);
+    backendService.getIterationTickets(projectId, $scope.currentIteration.IterationId, (err, tickets) => {
       if (err) return;
 
       if (!hasUpdatedIterationYet) {
@@ -84,8 +83,13 @@ const controller = function controller ($scope, $sce, backendService) {
     });
   };
 
-  updateIteration();
-  setInterval(updateIteration, updateInterval);
+  backendService.getIterations(projectId, (err, iterations) => {
+    if (err) return;
+    $scope.iterations = iterations;
+    if ($scope.currentIteration === null) $scope.currentIteration = $scope.iterations[$scope.iterations.length - 1];
+    $scope.updateIteration();
+    setInterval($scope.updateIteration, updateInterval);
+  });
 
 };
 
