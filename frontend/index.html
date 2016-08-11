@@ -12,12 +12,15 @@
       html, body, body > div, iframe {
         height: 100%;
       }
-      iframe {
+      #display {
         width: 100%;
-        border: 0;
+        height: 100%;
         position: absolute;
         top: 0;
         left: 0;
+        background-color: red;
+        background-size: cover;
+        opacity: 0.5;
       }
     </style>
   </head>
@@ -32,7 +35,7 @@
         <li ng-repeat="ticket in currentIterationTickets">{{ticket.Name}} ({{ticket.PlanEstimate || "No Estimate"}} - {{ticket.ScheduleState}})</li>
       </ol>
 
-      <iframe ng-if="currentYouTubeUrl" ng-src="{{currentYouTubeUrl}}"></iframe>
+      <div id="display"></div>
 
     </div>
   </body>

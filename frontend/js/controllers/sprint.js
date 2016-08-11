@@ -6,38 +6,15 @@ const controller = function controller ($scope, $sce, backendService) {
 
   const projectId = "19220804858";
   const updateInterval = 1000 * 5;
-  const youTubePlayLength = 1000 * 120;
+  const displayLength = 1000 * 30;
+  const displayFlashInterval = 100;
   const scheduleStateWeCareAbout = "Accepted";
 
   let hasUpdatedIterationYet = false;
 
-  const estimateYouTubes = {
-    "1": {
-      "id": "J_yZEQcYfYU",
-      "start": 24
-    },
-    "2": {
-      "id": "HZc0t2rZU_0",
-      "start": 0
-    },
-    "3": {
-      "id": "PoJLvtrzSrA",
-      "start": 30
-    },
-    "5": {
-      "id": "VABJaCQ2LAw",
-      "start": 20
-    },
-    "8": {
-      "id": "EZKFnpXy8-o",
-      "start": 4
-    }
-  };
-
   $scope.iterations = [];
   $scope.currentIteration = null;
   $scope.currentIterationTickets = [];
-  $scope.currentYouTubeUrl = null;
 
   $scope.manuallyUpdateIteration = function manuallyUpdateIteration () {
     hasUpdatedIterationYet = false;
@@ -73,15 +50,34 @@ const controller = function controller ($scope, $sce, backendService) {
       if (ticketsThatAreNowAcceptedAndWerentBefore.length === 0) return;
 
       let estimate = ticketsThatAreNowAcceptedAndWerentBefore[0].PlanEstimate || 1;
-      let estimateYouTube = estimateYouTubes[estimate.toString()];
 
-      $scope.currentYouTubeUrl = $sce.trustAsResourceUrl(`https://www.youtube.com/embed/${estimateYouTube.id}?autoplay=1&loop=1&start=${estimateYouTube.start}&playlist=${estimateYouTube.id}`);
-      setTimeout(() => {
-        $scope.currentYouTubeUrl = null;
-      }, youTubePlayLength);
+      $scope.display(estimate);
 
     });
   };
+
+  $scope.display = function display (estimate) {
+    let el = document.getElementById("display");
+    el.style.backgroundImage = `url('img/${estimate}.gif')`;
+    el.style.display = "block";
+
+    var makeComponent = () => {
+      return Math.floor(Math.random() * 255).toString();
+    };
+
+    let displayFlashIntervalReference = setInterval(() => {
+      document.body.style.backgroundColor = `rgb(${makeComponent()}, ${makeComponent()}, ${makeComponent()})`;
+    }, displayFlashInterval);
+
+    setTimeout(() => {
+      el.style.backgroundImage = "";
+      el.style.display = "none";
+      document.body.style.backgroundColor = "";
+      clearInterval(displayFlashIntervalReference);
+    }, displayLength);
+  };
+
+  $scope.display(1);
 
   backendService.getIterations(projectId, (err, iterations) => {
     if (err) return;
