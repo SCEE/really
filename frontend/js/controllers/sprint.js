@@ -36,11 +36,14 @@ const controller = function controller ($scope, $sce, backendService) {
   };
 
   $scope.iterations = [];
+  $scope.currentIteration = null;
+
   $scope.currentIterationTickets = [];
   $scope.currentYouTubeUrl = null;
 
   backendService.getIterations(projectId, (err, iterations) => {
     $scope.iterations = iterations;
+    $scope.currentIteration = iterations[iterations.length - 1];
   });
 
   const updateIteration = function updateIteration () {

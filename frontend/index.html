@@ -31,6 +31,8 @@
         </ol>
       </section>
 
+      <select ng-options="iteration.Name for iteration in iterations" ng-model="currentIteration" ng-change="">
+
       <iframe ng-if="currentYouTubeUrl" ng-src="{{currentYouTubeUrl}}"></iframe>
 
     </div>
