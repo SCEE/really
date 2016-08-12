@@ -32,12 +32,12 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
       },
       requestOptions: {}
     }, function(error, result) {
-        if (error) return callback(error);
-        result.Results.map((result) => {
-          result.IterationId = getIdFromRef(result._ref);
-          return result;
-        });
-        return callback(false, result.Results);
+      if (error) return callback(error);
+      result.Results = result.Results.map((result) => {
+        result.IterationId = getIdFromRef(result._ref);
+        return result;
+      });
+      return callback(false, result.Results);
     });
   };
 
@@ -58,6 +58,10 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
       if (error) {
         return callback(error);
       }
+      result.Results = result.Results.map((result) => {
+        result.IterationId = iterationId;
+        return result;
+      });
       return callback(false, result.Results);
     });
   };
@@ -79,6 +83,10 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
       if (error) {
         return callback(error);
       }
+      result.Results = result.Results.map((result) => {
+        result.IterationId = iterationId;
+        return result;
+      });
       return callback(false, result.Results);
     });
   }

@@ -1,6 +1,7 @@
 "use strict";
 
 const ueber = require("ueber");
+const chartist = require("chartist");
 
 const controller = function controller ($scope, $sce, backendService) {
 
@@ -9,11 +10,11 @@ const controller = function controller ($scope, $sce, backendService) {
   const displayLength = 1000 * 30;
   const scheduleStateWeCareAbout = "Accepted";
 
-  let hasUpdatedIterationYet = false;
-
-
   $scope.iterations = [];
+
+  $scope.previousIteration = null;
   $scope.currentIteration = null;
+
   $scope.currentIterationTickets = [];
   $scope.currentMp3Url = null;
 
@@ -35,8 +36,10 @@ const controller = function controller ($scope, $sce, backendService) {
     }
   };
 
-  $scope.manuallyUpdateIteration = function manuallyUpdateIteration () {
-    hasUpdatedIterationYet = false;
+  $scope.drawChart = function () {
+    let data = ueber.groupifyCount($scope.currentIterationTickets, "ScheduleState");
+    console.log(data);
+    // document.getElementById("chart");
   };
 
   $scope.updateIteration = function updateIteration () {
@@ -45,9 +48,16 @@ const controller = function controller ($scope, $sce, backendService) {
     backendService.getIterationTickets(projectId, $scope.currentIteration.IterationId, (err, tickets) => {
       if (err) return;
 
-      if (!hasUpdatedIterationYet) {
+      if (
+        $scope.previousIteration === null
+        ||
+        (
+          $scope.previousIteration !== null && $scope.previousIteration.IterationId !== $scope.currentIteration.IterationId
+        )
+      ) {
         $scope.currentIterationTickets = tickets;
-        hasUpdatedIterationYet = true;
+        $scope.previousIteration = $scope.currentIteration;
+        $scope.drawChart();
         return;
       }
 
@@ -64,11 +74,11 @@ const controller = function controller ($scope, $sce, backendService) {
       });
 
       $scope.currentIterationTickets = tickets;
+      $scope.drawChart();
 
       if (ticketsThatAreNowAcceptedAndWerentBefore.length === 0) return;
 
       let estimate = ticketsThatAreNowAcceptedAndWerentBefore[0].PlanEstimate || 1;
-
 
       $scope.display(estimate);
 
