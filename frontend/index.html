@@ -3,11 +3,16 @@
   <head>
     <meta charset="utf-8">
     <script src="js/index-browserified.js"></script>
+    <link rel="stylesheet" href="node_modules/chartist/dist/chartist.min.css">
     <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+      }
+      body, select {
+        font: 16px "Arial", "Helvetica", sans-serif;
+        letter-spacing: -1px;
       }
       html, body, body > div, iframe {
         height: 100%;
@@ -21,23 +26,57 @@
         display:none;
         background-size: cover;
       }
+      section {
+        width: 100%;
+        height: 10%;
+        padding: 16px;
+        opacity: 0.75;
+        background-color: white;
+        border-top: 1px solid gray;
+      }
+      section > h1 {
+        margin-bottom: 16px;
+      }
+      section > select {
+        width: 100%;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 1px solid gray;
+      }
+      #chart {
+        width: 100%;
+        height: 90%;
+        letter-spacing: initial;
+      }
+      #chart .ct-label {
+        font-size: 200%;
+      }
+      #current-iteration {
+        position: absolute;
+        top: 32px;
+        left: 32px;
+      }
     </style>
   </head>
   <body ng-app="app">
     <div ng-controller="sprintController">
 
-      <h1>Iterations</h1>
-      <select ng-options="iteration.Name for iteration in iterations" ng-model="currentIteration"></select>
+      <h1 id="current-iteration">{{currentIteration.Name}}</h1>
 
-      <h1>Tickets</h1>
+<!--       <h1>Tickets</h1>
       <ol>
         <li ng-repeat="ticket in currentIterationTickets">{{ticket.Name}} ({{ticket.PlanEstimate || "No Estimate"}} - {{ticket.ScheduleState}})</li>
-      </ol>
+      </ol> -->
 
       <div id="display"></div>
-      <audio id="woof" autoplay ng-src="{{currentMp3Url}}">
+      <audio id="woof" autoplay ng-src="{{currentMp3Url}}"></audio>
 
       <div id="chart"></div>
+
+      <section>
+        <select ng-options="iteration.Name for iteration in iterations" ng-model="currentIteration"></select>
+      </section>
 
     </div>
   </body>

@@ -1,7 +1,7 @@
 "use strict";
 
 const ueber = require("ueber");
-const chartist = require("chartist");
+const Chartist = require("chartist");
 
 const controller = function controller ($scope, $sce, backendService) {
 
@@ -38,8 +38,11 @@ const controller = function controller ($scope, $sce, backendService) {
 
   $scope.drawChart = function () {
     let data = ueber.groupifyCount($scope.currentIterationTickets, "ScheduleState");
-    console.log(data);
-    // document.getElementById("chart");
+    var chartData = {
+      labels: data.map(dataElement => dataElement.name),
+      series: data.map(dataElement => dataElement.count)
+    };
+    new Chartist.Pie('#chart', chartData, {});
   };
 
   $scope.updateIteration = function updateIteration () {
