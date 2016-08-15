@@ -102,6 +102,8 @@ const controller = function controller ($scope, $sce, backendService) {
     setTimeout(() => {
       el.style.backgroundImage = "";
       el.style.display = "none";
+      document.getElementById("woof").pause();
+      document.getElementById("woof").currentTime = 0;
       $scope.currentMp3Url = null;
     }, displayLength);
   };
