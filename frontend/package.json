@@ -4,7 +4,7 @@
     "start": "node_modules/http-server/bin/http-server -p 8081 --cors",
     "build": "node_modules/grunt/bin/grunt"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sprint view frontend for Rally.",
   "main": "index.js",
   "directories": {},

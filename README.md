@@ -3,17 +3,18 @@ Sprint view for Rally.
 
 ## Local Setup
 * Generate a Rally API key using [this CA guide](https://help.rallydev.com/rally-application-manager)
-* Change into the project base directory
-* Run `npm install` to download NodeJS dependencies for the backend
-* `cd frontend`
-* Run `npm install` to download NodeJS dependencies for the frontend
-* Run `npm run build` to download client-side JavaScript libraries
-* `cd ..`
+* `cd backend`
+* `npm install`
+* `cd ../frontend`
+* `npm install`
+* `npm run build`
+* `cd ../backend`
 * `export RALLY_API_KEY = "<generated_rally_api_key>"`
-* Start backend server with `npm start`
-* `cd frontend`
-* Start frontend server with `npm start`
-* Verify all is well by opening `http://<host>:8081` in the browser
+* `npm start`
+* Make a new terminal
+* `cd ../frontend`
+* `npm start`
+* Verify all is well by opening `http://<host>:8081`
 
 ## UAT Setup
 

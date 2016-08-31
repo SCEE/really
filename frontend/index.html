@@ -57,17 +57,29 @@
         top: 32px;
         left: 32px;
       }
+
+      .ct-series.undefined path {
+        fill: #666666;
+      }
+      .ct-series.defined path {
+        fill: #e74c3c;
+      }
+      .ct-series.in-progress path {
+        fill: #e67e22;
+      }
+      .ct-series.completed path {
+        fill: #f1c40f;
+      }
+      .ct-series.accepted path {
+        fill: #2ecc71;
+      }
+
     </style>
   </head>
   <body ng-app="app">
     <div ng-controller="sprintController">
 
       <h1 id="current-iteration">{{currentIteration.Name}}</h1>
-
-<!--       <h1>Tickets</h1>
-      <ol>
-        <li ng-repeat="ticket in currentIterationTickets">{{ticket.Name}} ({{ticket.PlanEstimate || "No Estimate"}} - {{ticket.ScheduleState}})</li>
-      </ol> -->
 
       <div id="display"></div>
       <audio id="woof" autoplay ng-src="{{currentMp3Url}}"></audio>
