@@ -18,6 +18,14 @@ const controller = function controller ($scope, $sce, backendService) {
   $scope.currentIterationTickets = [];
   $scope.currentMp3Url = null;
 
+  const statusClassNames = {
+    "Undefined": "undefined",
+    "Defined": "defined",
+    "In-Progress": "in-progress",
+    "Completed": "completed",
+    "Accepted": "accepted"
+  };
+
   const estimateMp3StartTimesSeconds = {
     "1": {
       "start": 24
@@ -38,11 +46,21 @@ const controller = function controller ($scope, $sce, backendService) {
 
   $scope.drawChart = function () {
     let data = ueber.groupifyCount($scope.currentIterationTickets, "ScheduleState");
-    var chartData = {
-      labels: data.map(dataElement => dataElement.name),
-      series: data.map(dataElement => dataElement.count)
-    };
-    new Chartist.Pie('#chart', chartData, {});
+    let labels = data.map(dataElement => dataElement.name);
+    let series = data.map(dataElement => {
+      return {
+        "value": dataElement.count,
+        "className": statusClassNames[dataElement.name]
+      };
+    });
+    new Chartist.Pie(
+      '#chart',
+      {
+        labels,
+        series
+      },
+      {}
+    );
   };
 
   $scope.updateIteration = function updateIteration () {
@@ -92,7 +110,6 @@ const controller = function controller ($scope, $sce, backendService) {
     $scope.currentMp3Url = `audio/${estimate}.mp3`;
     document.getElementById("woof").onplay = function() {
       this.currentTime = estimateMp3StartTimesSeconds[estimate.toString()].start;
-      console.log(`this.currentTime = ${this.currentTime}`);
     }
 
     let el = document.getElementById("display");
@@ -111,9 +128,14 @@ const controller = function controller ($scope, $sce, backendService) {
   backendService.getIterations(projectId, (err, iterations) => {
     if (err) return;
     $scope.iterations = iterations;
-    if ($scope.currentIteration === null) $scope.currentIteration = $scope.iterations[$scope.iterations.length - 1];
+    if ($scope.currentIteration === null) {
+      $scope.currentIteration = $scope.iterations.find((iteration) => {
+        return (iteration.Name === "Iteration 11.1");
+      }) || $scope.iterations[$scope.iterations.length - 1];
+      // $scope.currentIteration = $scope.iterations[$scope.iterations.length - 1];
+    }
     $scope.updateIteration();
-    setInterval($scope.updateIteration, updateInterval);
+    // setInterval($scope.updateIteration, updateInterval);
   });
 
 };
