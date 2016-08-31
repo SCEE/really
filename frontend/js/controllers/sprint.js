@@ -8,7 +8,6 @@ const controller = function controller ($scope, $sce, backendService) {
   const projectId = "19220804858";
   const updateInterval = 1000 * 5;
   const displayLength = 1000 * 30;
-  const scheduleStateWeCareAbout = "Accepted";
 
   $scope.iterations = [];
 
@@ -18,13 +17,14 @@ const controller = function controller ($scope, $sce, backendService) {
   $scope.currentIterationTickets = [];
   $scope.currentMp3Url = null;
 
-  const statusClassNames = {
+  const scheduleStateClassNames = {
     "Undefined": "undefined",
     "Defined": "defined",
     "In-Progress": "in-progress",
     "Completed": "completed",
     "Accepted": "accepted"
   };
+  const scheduleStateWeCareAbout = "Accepted";
 
   const estimateMp3StartTimesSeconds = {
     "1": {
@@ -44,13 +44,13 @@ const controller = function controller ($scope, $sce, backendService) {
     }
   };
 
-  $scope.drawChart = function () {
+  $scope.drawChart = function drawChart () {
     let data = ueber.groupifyCount($scope.currentIterationTickets, "ScheduleState");
     let labels = data.map(dataElement => dataElement.name);
     let series = data.map(dataElement => {
       return {
         "value": dataElement.count,
-        "className": statusClassNames[dataElement.name]
+        "className": scheduleStateClassNames[dataElement.name]
       };
     });
     new Chartist.Pie(
@@ -129,13 +129,13 @@ const controller = function controller ($scope, $sce, backendService) {
     if (err) return;
     $scope.iterations = iterations;
     if ($scope.currentIteration === null) {
-      $scope.currentIteration = $scope.iterations.find((iteration) => {
-        return (iteration.Name === "Iteration 11.1");
-      }) || $scope.iterations[$scope.iterations.length - 1];
-      // $scope.currentIteration = $scope.iterations[$scope.iterations.length - 1];
+      // $scope.currentIteration = $scope.iterations.find((iteration) => {
+      //   return (iteration.Name === "Iteration 11.1");
+      // }) || $scope.iterations[$scope.iterations.length - 1];
+      $scope.currentIteration = $scope.iterations[$scope.iterations.length - 1];
     }
     $scope.updateIteration();
-    // setInterval($scope.updateIteration, updateInterval);
+    setInterval($scope.updateIteration, updateInterval);
   });
 
 };
