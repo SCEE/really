@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body, select {
+  font: 16px "Arial", "Helvetica", sans-serif;
+  letter-spacing: -1px;
+}
+html, body, body > div, iframe {
+  height: 100%;
+}
+#display {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display:none;
+  background-size: cover;
+}
+section {
+  width: 100%;
+  height: 10%;
+  padding: 16px;
+  opacity: 0.75;
+  background-color: white;
+  border-top: 1px solid gray;
+}
+section > h1 {
+  margin-bottom: 16px;
+}
+section > select {
+  width: 100%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid gray;
+}
+#chart {
+  width: 100%;
+  height: 90%;
+  letter-spacing: initial;
+}
+#chart .ct-label {
+  font-size: 200%;
+}
+#current-iteration {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+}

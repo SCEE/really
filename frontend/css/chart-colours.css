@@ -1,0 +1,15 @@
+.ct-series.undefined path {
+  fill: #c0392b;
+}
+.ct-series.defined path {
+  fill: #d35400;
+}
+.ct-series.in-progress path {
+  fill: #9b59b6;
+}
+.ct-series.completed path {
+  fill: #27ae60;
+}
+.ct-series.accepted path {
+  fill: #2ecc71;
+}
