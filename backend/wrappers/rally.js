@@ -6,6 +6,7 @@ const rallyQueryUtils = rally.util.query;
 const wrapper = function wrapper (apiKey, apiVersion) {
 
   const rallyInstance = rally({
+    apiKey: apiKey,
     apiVersion: apiVersion,
     requestOptions: {
       headers: {}

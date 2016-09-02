@@ -21,6 +21,8 @@
         <select ng-options="iteration.Name for iteration in iterations" ng-model="currentIteration"></select>
       </section>
 
+      <h1 ng-show="pullRequestCount" id="pull-requests"><span>{{pullRequestCount}}</span> Pull Requests</span>
+
     </div>
   </body>
 </html>

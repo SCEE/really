@@ -3,9 +3,13 @@
 const ueber = require("ueber");
 const Chartist = require("chartist");
 
-const controller = function controller ($scope, $sce, rally) {
+const controller = function controller ($scope, $sce, rally, github) {
 
   const projectId = "19220804858";
+
+  const owner = "DevNet";
+  const repo = "DevNetLegacy";
+
   const updateInterval = 1000 * 5;
   const displayLength = 1000 * 30;
 
@@ -137,6 +141,16 @@ const controller = function controller ($scope, $sce, rally) {
     $scope.updateIteration();
     setInterval($scope.updateIteration, updateInterval);
   });
+
+  $scope.pullRequestCount = null;
+  $scope.updatePullRequests = function updatePullRequests () {
+    return github.getPullRequests(owner, repo, (error, pullRequests) => {
+      if (error) return;
+      $scope.pullRequestCount = pullRequests.length;
+    });
+  };
+  $scope.updatePullRequests();
+  setInterval($scope.updatePullRequests, 30000);
 
 };
 

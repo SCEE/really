@@ -29,7 +29,7 @@ server.get("/rally/project/:projectId/iterations", (request, resource, next) => 
     if (error) {
       console.log(error);
       resource.status(500);
-      return resource.send("rallyWrapperInstance returned an error. Sorry.");
+      resource.send("Wrapper instance returned an error. Sorry.");
       return next();
     }
     resource.send(iterations);
@@ -42,7 +42,7 @@ server.get("/rally/project/:projectId/iteration/:iterationId/stories", (request,
     if (error) {
       console.log(error);
       resource.status(500);
-      return resource.send("rallyWrapperInstance returned an error. Sorry.");
+      resource.send("Wrapper instance returned an error. Sorry.");
       return next();
     }
     resource.send(tickets);
@@ -55,10 +55,31 @@ server.get("/rally/project/:projectId/iteration/:iterationId/defects", (request,
     if (error) {
       console.log(error);
       resource.status(500);
-      return resource.send("rallyWrapperInstance returned an error. Sorry.");
+      resource.send("Wrapper instance returned an error. Sorry.");
       return next();
     }
     resource.send(tickets);
+    return next();
+  });
+});
+
+//
+// GITHUB
+//
+const GITHUB_REMOTE = process.env.GITHUB_REMOTE || "";
+const GITHUB_API_KEY = process.env.GITHUB_API_KEY || "";
+const gitHubWrapper = require("./wrappers/github");
+const gitHubWrapperInstance = new gitHubWrapper(GITHUB_REMOTE, GITHUB_API_KEY);
+
+server.get("/github/owner/:owner/repo/:repo/pull-requests", (request, resource, next) => {
+  return gitHubWrapperInstance.getPullRequests(request.params.owner, request.params.repo, (error, pullRequests) => {
+    if (error) {
+      console.log(error);
+      resource.status(500);
+      resource.send("Wrapper instance returned an error. Sorry.");
+      return next();
+    }
+    resource.send(pullRequests);
     return next();
   });
 });

@@ -47,6 +47,21 @@ section > select {
 }
 #current-iteration {
   position: absolute;
+  height: 96px;
+  line-height: 96px;
   top: 32px;
   left: 32px;
+}
+#pull-requests {
+  position: absolute;
+  height: 96px;
+  line-height: 96px;
+  top: 32px;
+  right: 32px;
+  color: red;
+}
+#pull-requests > span {
+  font-size: 200%;
+  vertical-align: middle;
+  margin-right: 8px;
 }
