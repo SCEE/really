@@ -3,7 +3,7 @@
 const ueber = require("ueber");
 const Chartist = require("chartist");
 
-const controller = function controller ($scope, $sce, backendService) {
+const controller = function controller ($scope, $sce, rally) {
 
   const projectId = "19220804858";
   const updateInterval = 1000 * 5;
@@ -66,7 +66,7 @@ const controller = function controller ($scope, $sce, backendService) {
   $scope.updateIteration = function updateIteration () {
 
     console.log("Updating iteration %s (%s)...", $scope.currentIteration.Name, $scope.currentIteration.IterationId);
-    backendService.getIterationTickets(projectId, $scope.currentIteration.IterationId, (err, tickets) => {
+    rally.getIterationTickets(projectId, $scope.currentIteration.IterationId, (err, tickets) => {
       if (err) return;
 
       if (
@@ -125,7 +125,7 @@ const controller = function controller ($scope, $sce, backendService) {
     }, displayLength);
   };
 
-  backendService.getIterations(projectId, (err, iterations) => {
+  rally.getIterations(projectId, (err, iterations) => {
     if (err) return;
     $scope.iterations = iterations;
     if ($scope.currentIteration === null) {

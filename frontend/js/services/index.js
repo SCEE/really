@@ -2,4 +2,5 @@
 
 var app = require("angular").module("app");
 
-app.service("backendService", require("./backend.js"));
+app.service("remote", require("./remote.js"));
+app.service("rally", require("./rally.js"));
