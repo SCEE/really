@@ -3,16 +3,12 @@
 const rally = require("rally");
 const rallyQueryUtils = rally.util.query;
 
-const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
+const wrapper = function wrapper (apiKey, apiVersion) {
 
   const rallyInstance = rally({
     apiVersion: apiVersion,
     requestOptions: {
-      headers: {
-        "X-RallyIntegrationName": "My cool node.js program",
-        "X-RallyIntegrationVendor": "My company",
-        "X-RallyIntegrationVersion": "1.0"
-      }
+      headers: {}
     }
   });
 
@@ -99,4 +95,4 @@ const rallyWrapper = function rallyWrapper (apiKey, apiVersion) {
 
 };
 
-module.exports = rallyWrapper;
+module.exports = wrapper;

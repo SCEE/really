@@ -1,5 +1,4 @@
 "use strict";
-
 const async = require("async");
 
 const service = function service ($http) {
@@ -29,16 +28,16 @@ const service = function service ($http) {
   };
 
   this.getIterations = function getIterations (projectId, callback) {
-    return abstractedMethod(`${url}/project/${projectId}/iterations`, "get", {}, callback);
+    return abstractedMethod(`${url}/rally/project/${projectId}/iterations`, "get", {}, callback);
   };
 
   this.getIterationTickets = function getIterationTickets (projectId, iterationId, callback) {
     async.parallel([
       (parallelCallback) => {
-        return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/stories`, "get", {}, parallelCallback);
+        return abstractedMethod(`${url}/rally/project/${projectId}/iteration/${iterationId}/stories`, "get", {}, parallelCallback);
       },
       (parallelCallback) => {
-        return abstractedMethod(`${url}/project/${projectId}/iteration/${iterationId}/defects`, "get", {}, parallelCallback);
+        return abstractedMethod(`${url}/rally/project/${projectId}/iteration/${iterationId}/defects`, "get", {}, parallelCallback);
       }
     ], function (err, stuff) {
       return callback(err, [].concat.apply([], stuff));
